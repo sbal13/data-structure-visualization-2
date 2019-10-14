@@ -19,15 +19,24 @@ class Tree {
 
     this.bfs(this.renderNode.bind(this))
     this.bfs((node) => {
-      if (node.parent){
+      if (node.parent && node.value !== null){
         this.renderEdge(node.parent.element.querySelector(".cell"), node.element.querySelector(".cell"))
       }
     })
   }
 
   renderNode(node){
+
+
+
+
     let nodeEl = document.createElement("div")
     nodeEl.className = "node"
+
+    if(!node.value){
+      node.parent.element.querySelector(".node-children").append(nodeEl)
+      return
+    }
 
     let cell = document.createElement("div")
     cell.className = "cell"
@@ -44,7 +53,6 @@ class Tree {
 
     if (node.parent){
       node.parent.element.querySelector(".node-children").append(nodeEl)
-
     } else {
       this.container.append(nodeEl)
     }
@@ -110,6 +118,9 @@ class Tree {
     }
 
     traverseType((node) => {
+      if (!node.value)
+        return
+      
       setTimeout(function(){
         const cell = node.element.querySelector(".cell")
         cell.className = "cell highlight"
