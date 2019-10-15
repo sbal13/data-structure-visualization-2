@@ -7,19 +7,29 @@
   <script defer type="text/javascript" src="node.js"></script>
   <script defer type="text/javascript" src="tree.js"></script>
   <script defer type="text/javascript" src="binary_tree.js"></script>
+  <script defer type="text/javascript" src="trie.js"></script>
   <script defer type="text/javascript" src="index.js"></script>
 </head>
 <body>
-  <div id="controls">
-    <button data-action="bst">BST!</button>
-    <button data-action="basic">BASIC TREE!</button>
-    <button data-action="populate">POPULATE!</button>
-    <form id="new-node-form">
-      <input type="text" name="node">
-      <input type="submit" value="Add node!">
-    </form>
-    <button data-action="bfs">BFS!</button>
-    <button data-action="dfs">DFS!</button>
+  <div id="top">
+    <div id="controls">
+      <button data-action="basic">BASIC TREE!</button>
+      <button data-action="bst">BST!</button>
+      <button data-action="trie">TRIE!</button>
+      <button data-action="populate">POPULATE!</button>
+      <form id="new-node-form">
+        <input type="text" name="node">
+        <input type="submit" value="ADD!">
+      </form>
+      <form id="search-form">
+        <input type="text" name="term">
+        <input type="submit" value="Search!">
+      </form>
+      <button data-action="bfs">BFT!</button>
+      <button data-action="dfs">DFT!</button>
+    </div>
+    <ul id="matches">
+    </ul>
   </div>
   <div id="tree"></div>
 </body>

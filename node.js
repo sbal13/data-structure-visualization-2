@@ -1,15 +1,21 @@
 class Node{
-  constructor(value, parent, binary = false){
+  constructor(value, parent, type){
     this.value = value
     this.parent = parent
     this.element = null
     this.id = ++Node.id
 
-    if (binary){
-      this.left = null
-      this.right = null
-    } else {
-      this.children = []
+    switch(type){
+      case "bts":
+        this.left = null
+        this.right = null
+        break;
+      case "basic":
+        this.children = []
+        break;
+      case "trie":
+        this.children = {}
+        break;
     }
 
     Node.all.push(this)

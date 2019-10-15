@@ -9,6 +9,10 @@
   position: absolute;
 }
 
+#top {
+  display: flex;
+}
+
 .highlight {
   background-color: red;
 }

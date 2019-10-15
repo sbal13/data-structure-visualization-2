@@ -1,7 +1,7 @@
 class BinarySearchTree extends Tree {
 
   append = (value) => {
-    const newNode = new Node(value, null, true)
+    const newNode = new Node(value, null, "bts")
 
     if (this.root){
       this.appendUtil(this.root, newNode)
@@ -9,6 +9,33 @@ class BinarySearchTree extends Tree {
       this.root = newNode
     }
   }
+
+  search(target){
+    this.searchUtil(this.root, target)
+  }
+
+  searchUtil(node, target){
+    if (!node){
+      alert("NOT FOUND :(")
+      return
+    }
+    const cell = node.element.querySelector(".cell")
+    cell.style.backgroundColor = "red"
+    setTimeout(() =>{
+      cell.style.backgroundColor = "white"
+      if(node.value === target){
+        cell.style.backgroundColor = "green"
+        setTimeout(function(){
+          cell.style.backgroundColor = "white"
+        }, 2000)
+      } else if(node.value > target){
+        return this.searchUtil(node.left, target)
+      } else {
+        return this.searchUtil(node.right, target)
+      }
+    }, 1000)
+  }
+
 
   // 23,15,78
   appendUtil = (node, newNode) =>{
@@ -21,7 +48,7 @@ class BinarySearchTree extends Tree {
         newNode.parent = node
 
         if (!node.right){
-          node.right = new Node(null, node, true)
+          node.right = new Node(null, node, "bts")
         }
       }
     } else if (node.value < newNode.value){
@@ -32,7 +59,7 @@ class BinarySearchTree extends Tree {
         newNode.parent = node
 
         if (!node.left){
-          node.left = new Node(null, node, true)
+          node.left = new Node(null, node, "bts")
         }
       }
     } else {

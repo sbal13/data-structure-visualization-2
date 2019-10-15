@@ -5,7 +5,7 @@ class Tree {
   }
 
   append(value, targetNode){
-    const newNode = new Node(value, targetNode)
+    const newNode = new Node(value, targetNode, "basic")
 
     if(this.root){
       targetNode.children.push(newNode)
@@ -26,14 +26,10 @@ class Tree {
   }
 
   renderNode(node){
-
-
-
-
     let nodeEl = document.createElement("div")
     nodeEl.className = "node"
 
-    if(!node.value){
+    if(node.value === null){
       node.parent.element.querySelector(".node-children").append(nodeEl)
       return
     }
@@ -120,7 +116,7 @@ class Tree {
     traverseType((node) => {
       if (!node.value)
         return
-      
+
       setTimeout(function(){
         const cell = node.element.querySelector(".cell")
         cell.className = "cell highlight"

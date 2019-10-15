@@ -1,20 +1,50 @@
 const controls = document.querySelector("#controls")
 const treeDisplay = document.querySelector("#tree")
 const newNodeForm = document.querySelector("#new-node-form")
+const searchForm = document.querySelector("#search-form")
+const matchList = document.querySelector("#matches")
+
+searchForm.style.display = "none"
 let treeType = "basic"
-let tree = new Tree(treeDisplay)
-// let tree = new BinarySearchTree(treeDisplay)
+let tree = null
 let chosenNode = null
 
 newNodeForm.addEventListener("submit", function(event){
   event.preventDefault()
 
-  const val = parseInt(event.target.node.value)
-  tree.append(val || event.target.node.value, chosenNode)
+  if (treeType === "trie"){
+    tree.append(event.target.node.value)
+  } else {
+    if(!chosenNode && treeType !== "bst"){
+      alert("please choose a node")
+      return
+    }
+    const val = parseInt(event.target.node.value)
+    tree.append(val || event.target.node.value, chosenNode)
+  }
+  
 
   tree.render()
   if (chosenNode)
    chosenNode.element.querySelector(".cell").className = "cell chosen"
+
+  event.target.reset()
+})
+
+searchForm.addEventListener("submit", function(event){
+  event.preventDefault()
+  if (tree.search){
+    const val = treeType === "bst" ? parseInt(event.target.term.value) : event.target.term.value
+
+    const matches = tree.search(val)
+
+    if (matches){
+      matchList.innerHTML = ""
+      matches.forEach(function(match){
+        matchList.insertAdjacentHTML("beforeend", `<li>${match}</li>`)
+      }) 
+    }
+  }
 })
 
 treeDisplay.addEventListener('click', function(event){
@@ -35,9 +65,15 @@ controls.addEventListener("click", function(event){
     tree.displayTraversal("bfs")
   } else if (event.target.dataset.action === "bst"){
     treeType = "bst"
+    searchForm.style.display = ""
     reset()
   } else if (event.target.dataset.action === "basic"){
     treeType = "basic"
+    searchForm.style.display = "none"
+    reset()
+  } else if (event.target.dataset.action === "trie"){
+    treeType = "trie"
+    searchForm.style.display = ""
     reset()
   } else if (event.target.dataset.action === "populate"){
     reset()
@@ -46,6 +82,9 @@ controls.addEventListener("click", function(event){
       tree.render()
     } else if(treeType === "basic"){
       populateTree()
+      tree.render()
+    } else if(treeType === "trie"){
+      populateTrie()
       tree.render()
     }
   }
@@ -56,7 +95,11 @@ function reset(){
     tree = new BinarySearchTree(treeDisplay)
   } else if(treeType === "basic"){
     tree = new Tree(treeDisplay)
+  } else if (treeType === "trie"){
+    tree = new Trie(treeDisplay)
   }
+
+  matchList.innerHTML = ""
   treeDisplay.innerHTML = ""
   chosenNode = null
   Node.all = []
@@ -92,5 +135,13 @@ function populateBinaryTree(){
   tree.append(28)
 }
 
-populateTree()
-tree.render()
+function populateTrie(){
+  tree.append("beef")
+  tree.append("beer")
+  tree.append("bell")
+  tree.append("belfry")
+  tree.append("robe")
+  tree.append("rout")
+  tree.append("robed")
+  tree.append("rotor")
+}
