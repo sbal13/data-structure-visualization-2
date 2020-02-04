@@ -3,8 +3,10 @@ const treeDisplay = document.querySelector("#tree")
 const newNodeForm = document.querySelector("#new-node-form")
 const searchForm = document.querySelector("#search-form")
 const matchList = document.querySelector("#matches")
+const avlModeButton = document.querySelector("#avl")
 
 searchForm.style.display = "none"
+let avlMode = false
 let treeType = "basic"
 let tree = null
 let chosenNode = null
@@ -20,7 +22,12 @@ newNodeForm.addEventListener("submit", function(event){
       return
     }
     const val = parseInt(event.target.node.value)
-    tree.append(val || event.target.node.value, chosenNode)
+    console.log(val)
+    // if (avlMode && tree.avlAppend){
+    //   tree.avlAppend(val, chosenNode)
+    // } else {
+      tree.append(val, chosenNode)
+    // }
   }
   
 
@@ -63,17 +70,28 @@ controls.addEventListener("click", function(event){
     tree.displayTraversal("dfs")
   } else if (event.target.dataset.action === "bfs"){
     tree.displayTraversal("bfs")
+  } else if (event.target.dataset.action === "avl"){
+    if (avlMode){
+      avlMode = false
+      event.target.innerText = "ENABLE AVL MODE!"
+    } else {
+      avlMode = true
+      event.target.innerText = "DISABLE AVL MODE!"
+    }
   } else if (event.target.dataset.action === "bst"){
     treeType = "bst"
     searchForm.style.display = ""
+    avlModeButton.style.display = ""
     reset()
   } else if (event.target.dataset.action === "basic"){
     treeType = "basic"
     searchForm.style.display = "none"
+    avlModeButton.style.display = "none"
     reset()
   } else if (event.target.dataset.action === "trie"){
     treeType = "trie"
     searchForm.style.display = ""
+    avlModeButton.style.display = "none"
     reset()
   } else if (event.target.dataset.action === "populate"){
     reset()
@@ -128,11 +146,10 @@ function populateTree(){
 function populateBinaryTree(){
   tree.append(26)
   tree.append(15)
-  tree.append(23)
-  tree.append(11)
-  tree.append(29)
-  tree.append(27)
-  tree.append(28)
+  tree.append(45)
+  tree.append(32)
+  tree.append(50)
+  tree.append(57)
 }
 
 function populateTrie(){

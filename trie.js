@@ -68,6 +68,7 @@ class Trie extends Tree{
         node = newNode
       }
     }
+    node.children[""] = new Node("", node, "trie")
   }
 
   dfsUtil = (node, callback) => {
